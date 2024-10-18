@@ -21,25 +21,6 @@
 - [[#enum][Enum]]
 - [[#union][Union]]
 - [[#pending-tasks][Pending tasks]]
-- [[#--strt-write-about-operators][[ ] STRT Write about operators]]
-- [[#--write-about-if-statements][[ ] Write about if statements]]
-- [[#--write-about-loops][[ ] Write about loops]]
-- [[#--write-about-switch][[ ] Write about switch]]
-- [[#--write-about-pointers][[ ] Write about pointers]]
-- [[#--write-about-vectors][[ ] Write about vectors]]
-- [[#--write-about-structs][[ ] Write about structs]]
-- [[#--write-about-enums][[ ] Write about enums]]
-- [[#--write-about-unions][[ ] Write about unions]]
-- [[#--write-about-functions][[ ] Write about functions]]
-- [[#--write-about-defer][[ ] Write about defer]]
-- [[#--write-about-errors][[ ] Write about errors]]
-- [[#--write-about-optionals][[ ] Write about optionals]]
-- [[#--look-into-peer-type-resolution][[ ] Look into peer type resolution]]
-- [[#--look-into-overflow-in-context-of-zig][[ ] Look into overflow in context of zig]]
-- [[#--look-into-comptime-known][[ ] Look into comptime known]]
-- [[#--look-into-build][[ ] Look into build]]
-- [[#--look-into-packed][[ ] Look into ~packed~]]
-- [[#--look-into-c-abi][[ ] Look into C ABI]]
 
 * Importing
 - The import function finds zig files corresponding to the path that is passed as an argument to it.
@@ -341,26 +322,26 @@ pub fn main() void {
 #+end_src
 
 * TODO Pending tasks
-* [ ] STRT Write about operators
-* [ ] Write about if statements
-* [ ] Write about loops
-* [ ] Write about switch
-* [ ] Write about pointers
-* [ ] Write about vectors
-* [ ] Write about structs
-  * [ ] Revisit genericts
-  * [ ] Revisit default fields
-  * [ ] Revisit extern structs
-  * [ ] Revisit packed structs
-* [ ] Write about enums
-* [ ] Write about unions
-* [ ] Write about functions
-* [ ] Write about defer
-* [ ] Write about errors
-* [ ] Write about optionals
-* [ ] Look into peer type resolution
-* [ ] Look into overflow in context of zig
-* [ ] Look into comptime known
-* [ ] Look into build
-* [ ] Look into ~packed~
-* [ ] Look into C ABI
+- [ ] STRT Write about operators
+- [ ] Write about if statements
+- [ ] Write about loops
+- [ ] Write about switch
+- [ ] Write about pointers
+- [ ] Write about vectors
+- [ ] Write about structs
+  - [ ] Revisit genericts
+  - [ ] Revisit default fields
+  - [ ] Revisit extern structs
+  - [ ] Revisit packed structs
+- [ ] Write about enums
+- [ ] Write about unions
+- [ ] Write about functions
+- [ ] Write about defer
+- [ ] Write about errors
+- [ ] Write about optionals
+- [ ] Look into peer type resolution
+- [ ] Look into overflow in context of zig
+- [ ] Look into comptime known
+- [ ] Look into build
+- [ ] Look into ~packed~
+- [ ] Look into C ABI
