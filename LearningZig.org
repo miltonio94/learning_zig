@@ -1,0 +1,347 @@
+#+TITLE: Learning Zig
+#+AUTHOR: M.
+#+DESCRIPTION: My notes in learning Zig
+#+TAGS: @zig @programming @learning
+#+PROPERTY: header-args:zig :tangle ./main.zig :mkdirp yes
+
+* Table content :toc:
+- [[#importing][Importing]]
+- [[#identifiers--assignment][Identifiers & Assignment]]
+- [[#primitive-types][Primitive Types]]
+- [[#string-literals][String literals]]
+- [[#arrays][Arrays]]
+- [[#operators][Operators]]
+- [[#loops][Loops]]
+- [[#if][if]]
+- [[#switch][switch]]
+- [[#functions][Functions]]
+- [[#struct][Struct]]
+  - [[#declaring-a-struct][Declaring a struct]]
+  - [[#struct-methods][Struct methods]]
+- [[#enum][Enum]]
+- [[#union][Union]]
+- [[#pending-tasks][Pending tasks]]
+
+* Importing
+- The import function finds zig files corresponding to the path that is passed as an argument to it.
+- Zig uses a struct abstraction for representing the code from the import.
+- Things that have been declared as ~pub~ can be refered to by other files, otherwise only the file containing the declaration can reffere to them.
+- The ~path~ passed to the function can either be relative paths or the name of a package.
+
+#+begin_src zig
+const std = @import("std");
+#+end_src
+
+* Identifiers & Assignment
+- We can declare either variables or constants in zig. To do so we use the keywords ~var~ for the former and ~const~ for the later.
+- Like most languages, identifiers must start with either a letter or an underscore. They may contain numbers in them.
+- Any keyword of the language can not be used as an identifier.
+- When declaring either a variable or a constant programmers must initialize it
+- Zig can infer types
+#+begin_src zig
+const infered_const = 89.89;
+#+end_src
+- Programmers can also declare a type at point of declaration
+#+begin_src zig
+const constant: i32 = 5;
+var variable: u32 = 9999;
+#+end_src
+- If programmer does not know what value to give at point of declaration the value ~undefined~ can be used
+- ~undefined~ can coerce into any type
+#+begin_src zig
+const a: u8 = undefined;
+#+end_src
+- Programmers can also explicitly coerce values using ~@as~, this is the preffered way of doing things
+#+begin_src zig
+const infered_again = @as(i32, 987);
+#+end_src
+* Primitive Types
+| Type           | C Equivelant       | Description            |
+|----------------+--------------------+------------------------|
+| i8             | int8_t             | signed 8 bit integer   |
+| u8             | uint8_t            | unsigned 8 bit integer |
+| i16            | int16_t            |                        |
+| u16            | uint16_t           |                        |
+| i32            | int32_t            |                        |
+| u32            | uint32_t           |                        |
+| i64            | int64_t            |                        |
+| u64            | uint64_t           |                        |
+| i128           | __int128           |                        |
+| u129           | unsigned __int128  |                        |
+| isize          | intptr_t           |                        |
+| usize          | uintptr_t size_t   |                        |
+| c_char         | char               |                        |
+| c_short        | short              |                        |
+| c_ushort       | usingned short     |                        |
+| c_int          | int                |                        |
+| c_uint         | unsigned int       |                        |
+| c_long         | long               |                        |
+| c_ulong        | unsigned  long     |                        |
+| c_longlong     | long long          |                        |
+| c_ulonglong    | unsigned long long |                        |
+| c_longdouble   | long double        |                        |
+| f16            | _Float16           |                        |
+| f32            | float              |                        |
+| f64            | double             |                        |
+| f80            | double             |                        |
+| f128           | _Float128          |                        |
+| bool           | bool               |                        |
+| anyopaque      | void               |                        |
+| void           | ❌                |                        |
+| noreturn       | ❌                |                        |
+| type           | ❌                |                        |
+| anyerror       | ❌                |                        |
+| comptime_int   | ❌                |                        |
+| comptime_float | ❌                |                        |
++----------------+--------------------+-----------------------+
+* String literals
+- String literals are constant pointers to a null-terminated byte array.
+- String literals encode both the length and their null termination, this allows us to coerce them into both slices and null terminated pointers.
+- Dereferencing string literals converts them to [[*Arrays][arrays]]
+- Zig strings are UTF-8 encoded
+- It is impossible to embed non UTF-8 into a string literal
+#+begin_src zig
+const infered_char_list = "hello world";
+#+end_src
+- Zig supports multiline string literals
+#+begin_src zig
+const multi_line_str_literal =
+    \\this is a multiline string literal;
+    \\it can span various lines
+    ;
+#+end_src
+* Arrays
+- In zig, arrays are declared with the general notation ~const identifer = [N]T;~ Where ~N~ is number of items in the array and ~T~ is the sub type for the array
+#+begin_src zig
+const arr_literal_with_length = [5]u8{ 'h', 'e', 'l', 'l', 'o' };
+const initialisation_using_result_location : [5]u8 = .{ 'h', 'e', 'l', 'l', 'o' };
+const arr = [5]i8;
+#+end_src
+- Zig can also infer the length of an array when the ~N~ is replaced by ~_~
+#+begin_src zig
+const array_literal_initialisation = [_]u8{ 'w', 'o', 'r', 'l', 'd' };
+#+end_src
+- NOTE: We've actually already declared an array in our very first example, strings, like in c, are just pointers to an array constant
+- We can get the length of arrays using ~len~ property
+#+begin_src zig
+const arr_len = arr.len;
+#+end_src
+- We can concat arrays with the concat operator
+#+begin_src zig
+const concated_arr =  arr_literal_with_length ++ " " ++ array_literal_initialisation  ;
+#+end_src
+
+* Operators
+Zig has no operator overloading.
+Here are zig's operators
+*** Addition
+- Addition can be done on integer values and floats.
+- Can cause overflows for integers
+- Ivokes peer type resolution for operands
+#+begin_src zig :tangle no
+a + b;
+a += b;
+#+end_src
+*** Wrapping addition
+- Two complement wrapping behaviour
+- Ivokes peer type resolution for operands
+- Can operate operate on integers
+#+begin_src zig :tangle no
+  a +% b;
+  a +%= b;
+  #+end_src
+*** Saturation addition
+- Ivokes peer type resolution for operands
+- Can operate operate on integers
+#+begin_src zig :tangle no
+  a +| b;
+  a +|= b;
+  #+end_src
+*** Subtraction
+- Subtraction can be done on integer values and floats.
+- Ivokes peer type resolution for operands
+- Can operate operate on integers and float
+#+begin_src zig :tangle no
+  a - b;
+  a -= b;
+  #+end_src
+*** Wrapping subtraction
+- Two complement wrapping behaviour
+- Ivokes peer type resolution for operands
+- Can operate operate on integers
+#+begin_src zig :tangle no
+  a +% b;
+  a +%= b;
+  #+end_src
+*** Saturation subtraction
+- Ivokes peer type resolution for operands
+- Can operate operate on integers
+#+begin_src zig :tangle no
+  a +| b;
+  a +|= b;
+  #+end_src
+*** Negation
+- Can operate on integers and floats
+- Can cause overflow firr integers
+#+begin_src zig :tangle no
+  -a
+  #+end_src
+*** Wrapping negation
+- Two complement wrapping behaviour
+- Can operate on integers
+#+begin_src zig :tangle no
+  -%a
+  #+end_src
+*** Mutiplication
+- Can cause overflow for integers
+- Can operate on integer values and floats.
+- Ivokes peer type resolution for operands
+#+begin_src zig :tangle no
+  a * b;
+  a *= b;
+  #+end_src
+*** Wrapping mutiplication
+- Two complement wrapping behaviour
+- Ivokes peer type resolution for operands
+- Can operate on integer
+#+begin_src zig :tangle no
+  a * b;
+  a *= b;
+  #+end_src
+*** Saturating mutiplication
+- Can operate on integer
+- Ivokes peer type resolution for operands
+#+begin_src zig :tangle no
+  a * b;
+  a *= b;
+  #+end_src
+* Loops
+* if
+* switch
+* Functions
+Function declaration looks like this
+#+begin_src zig
+fn add(x :i8, y: i8) i8{
+    if (x == 0) {
+        return y;
+    }
+    return x + y;
+}
+#+end_src
+- Using the ~export~ specifier makes the function externally visible in the generated object file, makes use of the C ABI
+#+begin_src zig
+export fn extern_add(x :i8, y: i8) i8{
+    if (x == 0) {
+        return y;
+    }
+    return x + y;
+}
+#+end_src
+* Struct
+** Declaring a struct
+- There is no guarantees about field order and size of struct.
+- Guaranteed to be ABI-aligned
+Declare a struct:
+#+begin_src zig
+const Point = struct {
+    x: f32,
+    y: f32,
+};
+#+end_src
+- It's possible to be specific about byte arrangement with ~paked~
+#+begin_src zig
+const Point2 = packed struct {
+    x: f32,
+    y: f32,
+};
+#+end_src
+Declare instance of struct
+#+begin_src zig
+const p = Point{
+    .x = 0.860,
+    .y = 0.342
+};
+#+end_src
+** Struct methods
+Structs can have methods
+- Nothing special about methods, they are just namespaced
+- Methods can be called using the doc syntax
+#+begin_src zig
+const Vec3 = struct {
+    x: f32,
+    y: f32,
+    z: f32,
+
+    pub fn init(x: f32, y: f32, z: f32) Vec3 {
+        return Vec3 {
+            .x = x,
+            .y = y,
+            .z = z,
+        };
+    }
+
+    pub fn dot(self: Vec3, other: Vec3) f32 {
+        return self.x * other.x + self.y * other.y + self.z * other.z;
+    }
+};
+
+test "dot product" {
+    const expect = @import("std").testing.expect;
+    const v1 = Vec3.init(1.0, 0.0, 0.0);
+    const v2 = Vec3.init(0.0, 1.0, 0.0);
+
+    try expect(Vec3.dot(v1, v2) == 0.0);
+}
+#+end_src
+- Structs can have declarations.
+- Structs can have 0 fields
+#+begin_src zig
+const Empty = struct {
+    pub const PI = 3.14;
+};
+#+end_src
+
+* Enum
+* Union
+
+
+
+
+
+
+
+- Iteration through an aray is done like so
+#+begin_src zig
+pub fn main() void {
+    var sum :u16 = 0;
+    for(arr_literal_with_length) |_u8_val| {
+        sum += @as(u16, _u8_val);
+    }
+    std.debug.print("{s}\n", .{concated_arr});
+}
+#+end_src
+
+* Pending tasks
+*** STRT Write about operators
+*** TODO Write about if statements
+*** TODO Write about loops
+*** TODO Write about switch
+*** TODO Write about pointers
+*** TODO Write about vectors
+*** STRT Write about structs
+**** TODO Revisit genericts
+**** TODO Revisit default fields
+**** TODO Revisit extern structs
+**** TODO Revisit packed structs
+*** TODO Write about enums
+*** TODO Write about unions
+*** TODO Write about functions
+*** TODO Write about defer
+*** TODO Write about errors
+*** TODO Write about optionals
+*** TODO Look into peer type resolution
+*** TODO Look into overflow in context of zig
+*** TODO Look into comptime known
+*** TODO Look into build
+*** TODO Look into ~packed~
+*** TODO Look into C ABI
