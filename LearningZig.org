@@ -321,27 +321,27 @@ pub fn main() void {
 }
 #+end_src
 
-* Pending tasks
-*** STRT Write about operators
-*** TODO Write about if statements
-*** TODO Write about loops
-*** TODO Write about switch
-*** TODO Write about pointers
-*** TODO Write about vectors
-*** STRT Write about structs
-**** TODO Revisit genericts
-**** TODO Revisit default fields
-**** TODO Revisit extern structs
-**** TODO Revisit packed structs
-*** TODO Write about enums
-*** TODO Write about unions
-*** TODO Write about functions
-*** TODO Write about defer
-*** TODO Write about errors
-*** TODO Write about optionals
-*** TODO Look into peer type resolution
-*** TODO Look into overflow in context of zig
-*** TODO Look into comptime known
-*** TODO Look into build
-*** TODO Look into ~packed~
-*** TODO Look into C ABI
+* TODO Pending tasks
+- [ ] STRT Write about operators
+- [ ] Write about if statements
+- [ ] Write about loops
+- [ ] Write about switch
+- [ ] Write about pointers
+- [ ] Write about vectors
+- [ ] Write about structs
+  - [ ] Revisit genericts
+  - [ ] Revisit default fields
+  - [ ] Revisit extern structs
+  - [ ] Revisit packed structs
+- [ ] Write about enums
+- [ ] Write about unions
+- [ ] Write about functions
+- [ ] Write about defer
+- [ ] Write about errors
+- [ ] Write about optionals
+- [ ] Look into peer type resolution
+- [ ] Look into overflow in context of zig
+- [ ] Look into comptime known
+- [ ] Look into build
+- [ ] Look into ~packed~
+- [ ] Look into C ABI
