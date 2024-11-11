@@ -56,44 +56,44 @@ const a: u8 = undefined;
 const infered_again = @as(i32, 987);
 #+end_src
 * Primitive Types
-| Type           | C Equivelant       | Description            |
-|----------------+--------------------+------------------------|
-| i8             | int8_t             | signed 8 bit integer   |
-| u8             | uint8_t            | unsigned 8 bit integer |
-| i16            | int16_t            |                        |
-| u16            | uint16_t           |                        |
-| i32            | int32_t            |                        |
-| u32            | uint32_t           |                        |
-| i64            | int64_t            |                        |
-| u64            | uint64_t           |                        |
-| i128           | __int128           |                        |
-| u129           | unsigned __int128  |                        |
-| isize          | intptr_t           |                        |
-| usize          | uintptr_t size_t   |                        |
-| c_char         | char               |                        |
-| c_short        | short              |                        |
-| c_ushort       | usingned short     |                        |
-| c_int          | int                |                        |
-| c_uint         | unsigned int       |                        |
-| c_long         | long               |                        |
-| c_ulong        | unsigned  long     |                        |
-| c_longlong     | long long          |                        |
-| c_ulonglong    | unsigned long long |                        |
-| c_longdouble   | long double        |                        |
-| f16            | _Float16           |                        |
-| f32            | float              |                        |
-| f64            | double             |                        |
-| f80            | double             |                        |
-| f128           | _Float128          |                        |
-| bool           | bool               |                        |
-| anyopaque      | void               |                        |
-| void           | ❌                |                        |
-| noreturn       | ❌                |                        |
-| type           | ❌                |                        |
-| anyerror       | ❌                |                        |
-| comptime_int   | ❌                |                        |
-| comptime_float | ❌                |                        |
-+----------------+--------------------+-----------------------+
+| Type           | C Equivelant       | Description                                                                     | Range                                                      |
+|----------------+--------------------+---------------------------------------------------------------------------------+------------------------------------------------------------|
+| i8             | int8_t             | signed 8 bit integer                                                            | -128 to 127                                                |
+| u8             | uint8_t            | unsigned 8 bit integer                                                          | 0 to 255                                                   |
+| i16            | int16_t            | Signed 16 bit integer                                                           | 0 to 65,535                                                |
+| u16            | uint16_t           | Unsigned 16 bit integer                                                         | -32,786 to 32,767                                          |
+| i32            | int32_t            | Signed 32 bit integer                                                           | -2,137,483,648 to 2,147,483,647                            |
+| u32            | uint32_t           | Unsigned 32 bit integer                                                         | 0 to 4,294,967,295                                         |
+| i64            | int64_t            | Signed 64 bit integer                                                           | 0 to 18,446,744,073,709,551,615                            |
+| u64            | uint64_t           | Unsigned 64 bit integer                                                         | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807    |
+| i128           | __int128           | Signed 128 bit integer                                                          | 0 to 340,​282,​366,​920,​938,​463,​463,​374,​607,​431,​768,​211,​455 |
+| u128           | unsigned __int128  | Unsigned 128 bit integer                                                        | −170,​141,​183,​460,​469,​231,​731,​687,​303,​715,​884,​105,​728  to 170,​141,​183,​460,​469,​231,​731,​687,​303,​715,​884,​105,​727 |
+| isize          | intptr_t           | Signed pointer sized integer                                                    |                                                            |
+| usize          | uintptr_t size_t   | Unsigned pointer sized integer                                                  |                                                            |
+| c_char         | char               |                                                                                 |                                                            |
+| c_short        | short              |                                                                                 |                                                            |
+| c_ushort       | usingned short     |                                                                                 |                                                            |
+| c_int          | int                |                                                                                 |                                                            |
+| c_uint         | unsigned int       |                                                                                 |                                                            |
+| c_long         | long               |                                                                                 |                                                            |
+| c_ulong        | unsigned  long     |                                                                                 |                                                            |
+| c_longlong     | long long          |                                                                                 |                                                            |
+| c_ulonglong    | unsigned long long |                                                                                 |                                                            |
+| c_longdouble   | long double        |                                                                                 |                                                            |
+| f16            | _Float16           | 16-bit floating point (10-bit mantissa) IEEE-754-2008 binary16                  |                                                            |
+| f32            | float              | 32-bit floating point (23-bit mantissa) IEEE-754-2008 binary32                  |                                                            |
+| f64            | double             | 64-bit floating point (52-bit mantissa) IEEE-754-2008 binary64                  |                                                            |
+| f80            | double             | 80-bit floating point (64-bit mantissa) IEEE-754-2008 80-bit extended precision |                                                            |
+| f128           | _Float128          | 128-bit floating point (112-bit mantissa) IEEE-754-2008 binary128               |                                                            |
+| bool           | bool               | true or false                                                                   |                                                            |
+| anyopaque      | void               |                                                                                 |                                                            |
+| void           | ❌                 | Always the value ~void{}~                                                       |                                                            |
+| noreturn       | ❌                 |                                                                                 |                                                            |
+| type           | ❌                 |                                                                                 |                                                            |
+| anyerror       | ❌                 |                                                                                 |                                                            |
+| comptime_int   | ❌                 | Only allowed for comptime-known values. The type of integer literals            |                                                            |
+| comptime_float | ❌                 | Only allowed for comptime-known values. The type of float literals              |                                                            |
+
 * String literals
 - String literals are constant pointers to a null-terminated byte array.
 - String literals encode both the length and their null termination, this allows us to coerce them into both slices and null terminated pointers.
